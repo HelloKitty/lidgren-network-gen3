@@ -25,8 +25,6 @@ namespace UnitTests
 
 			BitVectorTests.Run();
 
-			EncryptionTests.Run(peer);
-
 			var om = peer.CreateMessage();
 			peer.SendUnconnectedMessage(om, new IPEndPoint(IPAddress.Loopback, 14242));
 			try
@@ -61,6 +59,7 @@ namespace UnitTests
 			}
 
 			Console.WriteLine("Done");
+			Console.ReadKey();
 		}
 
 		/// <summary>

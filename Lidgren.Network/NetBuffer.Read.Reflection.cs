@@ -92,12 +92,10 @@ namespace Lidgren.Network
 					// read value
 					value = readMethod.Invoke(this, null);
 
-					// set the value
-#if UNITY_WEBPLAYER || UNITY_4_5
+					//This is the way to get the stter in .Net 3.5
+					//Must be changed to work with Unity and .Net 3.5
 					var setMethod = fi.GetSetMethod();
-#else
-					var setMethod = fi.SetMethod;
-#endif
+
 					if (setMethod != null)
 						setMethod.Invoke(target, new object[] { value });
 				}

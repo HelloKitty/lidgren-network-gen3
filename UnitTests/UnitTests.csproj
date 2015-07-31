@@ -42,7 +42,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BitVectorTests.cs" />
-    <Compile Include="EncryptionTests.cs" />
     <Compile Include="MiscTests.cs" />
     <Compile Include="NetQueueTests.cs" />
     <Compile Include="Program.cs" />

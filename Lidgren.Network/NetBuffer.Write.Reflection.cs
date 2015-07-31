@@ -78,11 +78,10 @@ namespace Lidgren.Network
 
 			foreach (PropertyInfo fi in fields)
 			{
-#if UNITY_WEBPLAYER || UNITY_4_5
+				//This is the way to get the getter in .Net 3.5
+				//Must be changed to work with Unity and .Net 3.5
 				MethodInfo getMethod = fi.GetGetMethod();
-#else
-				MethodInfo getMethod = fi.GetMethod;
-#endif
+
 				if (getMethod != null)
 				{
 					object value = getMethod.Invoke(ob, null);

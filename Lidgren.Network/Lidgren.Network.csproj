@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Lidgren.Network</RootNamespace>
     <AssemblyName>Lidgren.Network</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
@@ -54,30 +54,10 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Encryption\NetAESEncryption.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Encryption\NetCryptoProviderBase.cs" />
-    <Compile Include="Encryption\NetDESEncryption.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Encryption\NetEncryption.cs" />
-    <Compile Include="Encryption\NetBlockEncryptionBase.cs" />
-    <Compile Include="Encryption\NetRC2Encryption.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Encryption\NetTripleDESEncryption.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Encryption\NetXorEncryption.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Encryption\NetXteaEncryption.cs" />
     <Compile Include="NamespaceDoc.cs" />
     <Compile Include="NetBigInteger.cs" />
     <Compile Include="NetBitVector.cs" />
@@ -127,7 +107,6 @@
     <Compile Include="NetSenderChannelBase.cs" />
     <Compile Include="NetSendResult.cs" />
     <Compile Include="NetServer.cs" />
-    <Compile Include="NetSRP.cs" />
     <Compile Include="NetStoredReliableMessage.cs" />
     <Compile Include="NetTime.cs" />
     <Compile Include="NetTuple.cs" />
