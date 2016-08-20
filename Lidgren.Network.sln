@@ -1,6 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lidgren.Network", "Lidgren.Network\Lidgren.Network.csproj", "{49BA1C69-6104-41AC-A5D8-B54FA9F696E8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{6691874A-1766-4A08-A72A-B1132FAB8E58}"
@@ -13,6 +15,12 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|Mixed Platforms = Release|Mixed Platforms
 		Release|x86 = Release|x86
+		UnityDebug|Any CPU = UnityDebug|Any CPU
+		UnityDebug|Mixed Platforms = UnityDebug|Mixed Platforms
+		UnityDebug|x86 = UnityDebug|x86
+		UnityRelease|Any CPU = UnityRelease|Any CPU
+		UnityRelease|Mixed Platforms = UnityRelease|Mixed Platforms
+		UnityRelease|x86 = UnityRelease|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{49BA1C69-6104-41AC-A5D8-B54FA9F696E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -25,6 +33,18 @@ Global
 		{49BA1C69-6104-41AC-A5D8-B54FA9F696E8}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{49BA1C69-6104-41AC-A5D8-B54FA9F696E8}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{49BA1C69-6104-41AC-A5D8-B54FA9F696E8}.Release|x86.ActiveCfg = Release|Any CPU
+		{49BA1C69-6104-41AC-A5D8-B54FA9F696E8}.UnityDebug|Any CPU.ActiveCfg = UnityDebug|Any CPU
+		{49BA1C69-6104-41AC-A5D8-B54FA9F696E8}.UnityDebug|Any CPU.Build.0 = UnityDebug|Any CPU
+		{49BA1C69-6104-41AC-A5D8-B54FA9F696E8}.UnityDebug|Mixed Platforms.ActiveCfg = UnityDebug|Any CPU
+		{49BA1C69-6104-41AC-A5D8-B54FA9F696E8}.UnityDebug|Mixed Platforms.Build.0 = UnityDebug|Any CPU
+		{49BA1C69-6104-41AC-A5D8-B54FA9F696E8}.UnityDebug|x86.ActiveCfg = UnityDebug|Any CPU
+		{49BA1C69-6104-41AC-A5D8-B54FA9F696E8}.UnityDebug|x86.Build.0 = UnityDebug|Any CPU
+		{49BA1C69-6104-41AC-A5D8-B54FA9F696E8}.UnityRelease|Any CPU.ActiveCfg = UnityRelease|Any CPU
+		{49BA1C69-6104-41AC-A5D8-B54FA9F696E8}.UnityRelease|Any CPU.Build.0 = UnityRelease|Any CPU
+		{49BA1C69-6104-41AC-A5D8-B54FA9F696E8}.UnityRelease|Mixed Platforms.ActiveCfg = UnityRelease|Any CPU
+		{49BA1C69-6104-41AC-A5D8-B54FA9F696E8}.UnityRelease|Mixed Platforms.Build.0 = UnityRelease|Any CPU
+		{49BA1C69-6104-41AC-A5D8-B54FA9F696E8}.UnityRelease|x86.ActiveCfg = UnityRelease|Any CPU
+		{49BA1C69-6104-41AC-A5D8-B54FA9F696E8}.UnityRelease|x86.Build.0 = UnityRelease|Any CPU
 		{6691874A-1766-4A08-A72A-B1132FAB8E58}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{6691874A-1766-4A08-A72A-B1132FAB8E58}.Debug|Any CPU.Build.0 = Debug|x86
 		{6691874A-1766-4A08-A72A-B1132FAB8E58}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
@@ -36,6 +56,16 @@ Global
 		{6691874A-1766-4A08-A72A-B1132FAB8E58}.Release|Mixed Platforms.Build.0 = Release|x86
 		{6691874A-1766-4A08-A72A-B1132FAB8E58}.Release|x86.ActiveCfg = Release|x86
 		{6691874A-1766-4A08-A72A-B1132FAB8E58}.Release|x86.Build.0 = Release|x86
+		{6691874A-1766-4A08-A72A-B1132FAB8E58}.UnityDebug|Any CPU.ActiveCfg = UnityDebug|x86
+		{6691874A-1766-4A08-A72A-B1132FAB8E58}.UnityDebug|Mixed Platforms.ActiveCfg = UnityDebug|x86
+		{6691874A-1766-4A08-A72A-B1132FAB8E58}.UnityDebug|Mixed Platforms.Build.0 = UnityDebug|x86
+		{6691874A-1766-4A08-A72A-B1132FAB8E58}.UnityDebug|x86.ActiveCfg = UnityDebug|x86
+		{6691874A-1766-4A08-A72A-B1132FAB8E58}.UnityDebug|x86.Build.0 = UnityDebug|x86
+		{6691874A-1766-4A08-A72A-B1132FAB8E58}.UnityRelease|Any CPU.ActiveCfg = UnityRelease|x86
+		{6691874A-1766-4A08-A72A-B1132FAB8E58}.UnityRelease|Mixed Platforms.ActiveCfg = UnityRelease|x86
+		{6691874A-1766-4A08-A72A-B1132FAB8E58}.UnityRelease|Mixed Platforms.Build.0 = UnityRelease|x86
+		{6691874A-1766-4A08-A72A-B1132FAB8E58}.UnityRelease|x86.ActiveCfg = UnityRelease|x86
+		{6691874A-1766-4A08-A72A-B1132FAB8E58}.UnityRelease|x86.Build.0 = UnityRelease|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
