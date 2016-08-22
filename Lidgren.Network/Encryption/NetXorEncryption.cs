@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
+#if !GLADNET
 namespace Lidgren.Network
 {
 	/// <summary>
@@ -64,3 +65,4 @@ namespace Lidgren.Network
 		}
 	}
 }
+#endif

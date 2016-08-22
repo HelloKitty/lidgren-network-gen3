@@ -1,4 +1,5 @@
 ﻿using System;
+#if !GLADNET
 using System.Collections.Generic;
 
 namespace Lidgren.Network
@@ -87,3 +88,4 @@ namespace Lidgren.Network
 		protected abstract void DecryptBlock(byte[] source, int sourceOffset, byte[] destination);
 	}
 }
+#endif

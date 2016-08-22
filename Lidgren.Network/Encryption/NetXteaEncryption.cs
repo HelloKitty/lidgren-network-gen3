@@ -17,6 +17,7 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR TH
 USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 using System;
+#if !GLADNET
 using System.Security.Cryptography;
 using System.Text;
 using System.Security;
@@ -152,3 +153,4 @@ namespace Lidgren.Network
 		}
 	}
 }
+#endif

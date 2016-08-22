@@ -1,4 +1,4 @@
-﻿﻿﻿#if UNITY
+﻿﻿﻿#if UNITY && !GLADNET
 using UnityEngine;
 
 namespace Lidgren.Network

@@ -15,7 +15,7 @@ namespace UnitTests
 			// Test encryption
 			//
 			List<NetEncryption> algos = new List<NetEncryption>();
-
+#if !GLADNET
 			algos.Add(new NetXorEncryption(peer, "TopSecret"));
 			algos.Add(new NetXtea(peer, "TopSecret"));
 			algos.Add(new NetAESEncryption(peer, "TopSecret"));
@@ -95,6 +95,8 @@ namespace UnitTests
 
 				var test = NetSRP.CreateEncryption(peer, Ss);
 			}
+
+#endif
 
 			Console.WriteLine("Message encryption OK");
 		}

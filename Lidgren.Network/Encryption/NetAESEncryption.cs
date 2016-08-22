@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+#if !GLADNET
 using System.Security.Cryptography;
 
 namespace Lidgren.Network
@@ -36,3 +37,4 @@ namespace Lidgren.Network
 		}
 	}
 }
+#endif
