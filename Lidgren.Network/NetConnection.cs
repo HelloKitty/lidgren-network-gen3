@@ -27,7 +27,10 @@ namespace Lidgren.Network
 		internal NetSenderChannelBase[] m_sendChannels;
 		internal NetReceiverChannelBase[] m_receiveChannels;
 		internal NetOutgoingMessage m_localHailMessage;
-		internal long m_remoteUniqueIdentifier;
+		internal int m_remoteUniqueIdentifier;
+
+		internal static int remoteUniqueIdCount = 0; //start at 1 (will be incremented)
+
 		internal NetQueue<NetTuple<NetMessageType, int>> m_queuedOutgoingAcks;
 		internal NetQueue<NetTuple<NetMessageType, int>> m_queuedIncomingAcks;
 		private int m_sendBufferWritePtr;
@@ -67,7 +70,7 @@ namespace Lidgren.Network
 		/// <summary>
 		/// Gets the unique identifier of the remote NetPeer for this connection
 		/// </summary>
-		public long RemoteUniqueIdentifier { get { return m_remoteUniqueIdentifier; } }
+		public int RemoteUniqueIdentifier { get { return m_remoteUniqueIdentifier; } }
 
 		/// <summary>
 		/// Gets the local hail message that was sent as part of the handshake
@@ -426,7 +429,9 @@ namespace Lidgren.Network
 					break;
 
 				case NetMessageType.ConnectionEstablished:
-					// do nothing, all's well
+					//The server assigned unique identifier comes in the connection established message
+					//I don't know if we need to actually set it though
+					HandleConnectionEstablished();
 					break;
 
 				case NetMessageType.LibraryError:
@@ -483,6 +488,15 @@ namespace Lidgren.Network
 					m_peer.LogWarning("Connection received unhandled library message: " + tp);
 					break;
 			}
+		}
+
+		private void HandleConnectionEstablished()
+		{
+			//read time float first
+			//float time = netIncomingMessage.ReadFloat();
+
+			//This next int will be the assigned remote unique identifier
+			//m_remoteUniqueIdentifier = netIncomingMessage.ReadInt32();
 		}
 
 		internal void ReceivedMessage(NetIncomingMessage msg)

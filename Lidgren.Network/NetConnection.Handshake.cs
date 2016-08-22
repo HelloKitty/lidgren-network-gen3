@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using System.Threading;
 
@@ -134,12 +135,12 @@ namespace Lidgren.Network
 			m_peer.VerifyNetworkThread();
 
 			int preAllocate = 13 + m_peerConfiguration.AppIdentifier.Length;
-			preAllocate += (m_localHailMessage == null ? 0 : m_localHailMessage.LengthBytes);
+			preAllocate += (m_localHailMessage == null ? 0 : m_localHailMessage.LengthBytes) - 8; //subtract 8 for the removed unique identifier
 
 			NetOutgoingMessage om = m_peer.CreateMessage(preAllocate);
 			om.m_messageType = NetMessageType.Connect;
 			om.Write(m_peerConfiguration.AppIdentifier);
-			om.Write(m_peer.m_uniqueIdentifier);
+			//om.Write(m_peer.m_uniqueIdentifier); //don't send the unique identifier with a connect anymore
 			om.Write((float)now);
 
 			WriteLocalHail(om);
@@ -163,7 +164,8 @@ namespace Lidgren.Network
 			NetOutgoingMessage om = m_peer.CreateMessage(m_peerConfiguration.AppIdentifier.Length + 13 + (m_localHailMessage == null ? 0 : m_localHailMessage.LengthBytes));
 			om.m_messageType = NetMessageType.ConnectResponse;
 			om.Write(m_peerConfiguration.AppIdentifier);
-			om.Write(m_peer.m_uniqueIdentifier);
+			//m_remoteUniqueIdentifier = (int)new Random((int)NetTime.Now).Next();
+			//om.Write((int)new Random((int)NetTime.Now).Next()); //we need to send this identifier because it's the place where the remote peer learns the server's unique ID (though not really meaningful)
 			om.Write((float)now);
 			Interlocked.Increment(ref om.m_recyclingCount);
 			WriteLocalHail(om);
@@ -215,13 +217,18 @@ namespace Lidgren.Network
 			NetOutgoingMessage om = m_peer.CreateMessage(4);
 			om.m_messageType = NetMessageType.ConnectionEstablished;
 			om.Write((float)NetTime.Now);
+
+			//m_remoteUniqueIdentifier = (int)new Random((int)NetTime.Now).Next();
+			//Added for server controlled identifier
+			//om.Write((int)55); //TODO: Actually set the identifier. Right now it's 0
+
 			m_peer.SendLibrary(om, m_remoteEndPoint);
 
 			m_handshakeAttempts = 0;
 
 			InitializePing();
 			if (m_status != NetConnectionStatus.Connected)
-				SetStatus(NetConnectionStatus.Connected, "Connected to " + NetUtility.ToHexString(m_remoteUniqueIdentifier));
+				SetStatus(NetConnectionStatus.Connected, $"Connected to {m_remoteUniqueIdentifier}");
 		}
 
 		/// <summary>
@@ -361,9 +368,12 @@ namespace Lidgren.Network
 							NetIncomingMessage msg = m_peer.SetupReadHelperMessage(ptr, payloadLength);
 							InitializeRemoteTimeOffset(msg.ReadSingle());
 
+							//This is where the server can assign connected peer's IDs.
+							m_remoteUniqueIdentifier = Interlocked.Increment(ref remoteUniqueIdCount);
+
 							m_peer.AcceptConnection(this);
 							InitializePing();
-							SetStatus(NetConnectionStatus.Connected, "Connected to " + NetUtility.ToHexString(m_remoteUniqueIdentifier));
+							SetStatus(NetConnectionStatus.Connected, $"Connected to {m_remoteUniqueIdentifier}");
 							return;
 					}
 					break;
@@ -421,7 +431,7 @@ namespace Lidgren.Network
 						}
 
 						m_peer.AcceptConnection(this);
-						SendConnectionEstablished();
+						SendConnectionEstablished(); //been modified to support int identifiers
 						return;
 					}
 					break;
@@ -450,7 +460,6 @@ namespace Lidgren.Network
 			try
 			{
 				string remoteAppIdentifier = msg.ReadString();
-				long remoteUniqueIdentifier = msg.ReadInt64();
 				InitializeRemoteTimeOffset(msg.ReadSingle());
 
 				int remainingBytes = payloadLength - (msg.PositionInBytes - ptr);
@@ -463,7 +472,8 @@ namespace Lidgren.Network
 					return false;
 				}
 
-				m_remoteUniqueIdentifier = remoteUniqueIdentifier;
+				//The remote ID assigned by the server
+				//m_remoteUniqueIdentifier = tempRemoteId;
 			}
 			catch(Exception ex)
 			{
