@@ -35,7 +35,7 @@ namespace Lidgren.Network
 		internal Dictionary<NetEndPoint, NetConnection> m_handshakes;
 
 		internal readonly NetPeerStatistics m_statistics;
-		internal int m_uniqueIdentifier;
+		internal long m_uniqueIdentifier;
 		internal bool m_executeFlushSendQueue;
 
 		private AutoResetEvent m_messageReceivedEvent;
@@ -172,17 +172,14 @@ namespace Lidgren.Network
 				m_readHelperMessage = new NetIncomingMessage(NetIncomingMessageType.Error);
 				m_readHelperMessage.m_data = m_receiveBuffer;
 
-				/*byte[] macBytes = NetUtility.GetMacAddressBytes();
+				byte[] macBytes = NetUtility.GetMacAddressBytes();
 
 				var boundEp = m_socket.LocalEndPoint as NetEndPoint;
 				byte[] epBytes = BitConverter.GetBytes(boundEp.GetHashCode());
 				byte[] combined = new byte[epBytes.Length + macBytes.Length];
 				Array.Copy(epBytes, 0, combined, 0, epBytes.Length);
 				Array.Copy(macBytes, 0, combined, epBytes.Length, macBytes.Length);
-				m_uniqueIdentifier = BitConverter.ToInt64(NetUtility.ComputeSHAHash(combined), 0);*/
-
-				//Just set unique ID to 0
-				m_uniqueIdentifier = 0;
+				m_uniqueIdentifier = BitConverter.ToInt64(NetUtility.ComputeSHAHash(combined), 0);
 
 				m_status = NetPeerStatus.Running;
 			}

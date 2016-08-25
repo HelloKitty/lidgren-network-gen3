@@ -139,7 +139,7 @@ namespace Lidgren.Network
 			NetOutgoingMessage om = m_peer.CreateMessage(preAllocate);
 			om.m_messageType = NetMessageType.Connect;
 			om.Write(m_peerConfiguration.AppIdentifier);
-			om.Write(m_peer.m_uniqueIdentifier);
+			om.Write((long)m_peer.m_uniqueIdentifier); //cast to long to keep old message
 			om.Write((float)now);
 
 			WriteLocalHail(om);
@@ -163,7 +163,7 @@ namespace Lidgren.Network
 			NetOutgoingMessage om = m_peer.CreateMessage(m_peerConfiguration.AppIdentifier.Length + 13 + (m_localHailMessage == null ? 0 : m_localHailMessage.LengthBytes));
 			om.m_messageType = NetMessageType.ConnectResponse;
 			om.Write(m_peerConfiguration.AppIdentifier);
-			om.Write(m_peer.m_uniqueIdentifier);
+			om.Write((long)m_peer.m_uniqueIdentifier);
 			om.Write((float)now);
 			Interlocked.Increment(ref om.m_recyclingCount);
 			WriteLocalHail(om);
@@ -221,7 +221,7 @@ namespace Lidgren.Network
 
 			InitializePing();
 			if (m_status != NetConnectionStatus.Connected)
-				SetStatus(NetConnectionStatus.Connected, "Connected to " + NetUtility.ToHexString(m_remoteUniqueIdentifier));
+				SetStatus(NetConnectionStatus.Connected, $"Connected to {m_remoteUniqueIdentifier}");
 		}
 
 		/// <summary>
@@ -363,7 +363,7 @@ namespace Lidgren.Network
 
 							m_peer.AcceptConnection(this);
 							InitializePing();
-							SetStatus(NetConnectionStatus.Connected, "Connected to " + NetUtility.ToHexString(m_remoteUniqueIdentifier));
+							SetStatus(NetConnectionStatus.Connected, $"Connected to {m_remoteUniqueIdentifier}");
 							return;
 					}
 					break;
