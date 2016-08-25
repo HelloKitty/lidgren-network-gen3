@@ -55,7 +55,7 @@ namespace Lidgren.Network
 		/// <summary>
 		/// Gets a unique identifier for this NetPeer based on Mac address and ip/port. Note! Not available until Start() has been called!
 		/// </summary>
-		public long UniqueIdentifier { get { return m_uniqueIdentifier; } }
+		public int UniqueIdentifier { get { return m_uniqueIdentifier; } }
 
 		/// <summary>
 		/// Gets the port number this NetPeer is listening and sending on, if Start() has been called

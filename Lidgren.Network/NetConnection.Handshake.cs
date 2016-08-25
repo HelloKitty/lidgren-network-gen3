@@ -463,7 +463,8 @@ namespace Lidgren.Network
 					return false;
 				}
 
-				m_remoteUniqueIdentifier = remoteUniqueIdentifier;
+				//Don't set it in handshake.
+				//m_remoteUniqueIdentifier = remoteUniqueIdentifier;
 			}
 			catch(Exception ex)
 			{
