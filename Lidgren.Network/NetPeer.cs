@@ -55,7 +55,7 @@ namespace Lidgren.Network
 		/// <summary>
 		/// Gets a unique identifier for this NetPeer based on Mac address and ip/port. Note! Not available until Start() has been called!
 		/// </summary>
-		public int UniqueIdentifier { get { return m_uniqueIdentifier; } }
+		public long UniqueIdentifier { get { return m_uniqueIdentifier; } }
 
 		/// <summary>
 		/// Gets the port number this NetPeer is listening and sending on, if Start() has been called
@@ -118,7 +118,7 @@ namespace Lidgren.Network
 			m_statistics = new NetPeerStatistics(this);
 			m_releasedIncomingMessages = new NetQueue<NetIncomingMessage>(4);
 			m_unsentUnconnectedMessages = new NetQueue<NetTuple<NetEndPoint, NetOutgoingMessage>>(2);
-			m_connections = new List<NetConnection>(1);
+			m_connections = new List<NetConnection>();
 			m_connectionLookup = new Dictionary<NetEndPoint, NetConnection>();
 			m_handshakes = new Dictionary<NetEndPoint, NetConnection>();
 			m_senderRemote = (EndPoint)new NetEndPoint(IPAddress.Any, 0);

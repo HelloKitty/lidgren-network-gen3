@@ -3,9 +3,6 @@ using System.Reflection;
 using Lidgren.Network;
 using System.Net;
 using System.Net.Sockets;
-using System.Collections.Generic;
-using System.Threading;
-using System.Linq;
 
 namespace UnitTests
 {
@@ -13,41 +10,28 @@ namespace UnitTests
 	{
 		static void Main(string[] args)
 		{
-			NetPeerConfiguration peerConfig = new NetPeerConfiguration("unittests");
-			NetPeerConfiguration serverConfig = new NetPeerConfiguration("unittests") { Port = 5070, AcceptIncomingConnections = true };
-			peerConfig.EnableUPnP = true;
-			NetClient peer1 = new NetClient(peerConfig);
-			NetClient peer2 = new NetClient(peerConfig);
+			NetPeerConfiguration config = new NetPeerConfiguration("unittests");
+			config.EnableUPnP = true;
+			NetPeer peer = new NetPeer(config);
+			peer.Start(); // needed for initialization
 
-			NetServer server = new NetServer(serverConfig);
-			peer1.Start(); // needed for initialization
-			peer2.Start(); // needed for initialization
-			server.Start();
+			Console.WriteLine("Unique identifier is " + NetUtility.ToHexString(peer.UniqueIdentifier));
 
-			peer1.Connect(new IPEndPoint(IPAddress.Loopback, 5070), peer1.CreateMessage());
-			Thread.Sleep(1000);
-			peer2.Connect(new IPEndPoint(IPAddress.Loopback, 5070), peer2.CreateMessage());
-			Thread.Sleep(1000);
-
-			server.ReadMessages(new List<NetIncomingMessage>());
-
-			Console.WriteLine($"Unique identifier is {peer1.UniqueIdentifier}");
-
-			ReadWriteTests.Run(peer1);
+			ReadWriteTests.Run(peer);
 
 			NetQueueTests.Run();
 
-			MiscTests.Run(peer1);
+			MiscTests.Run(peer);
 
 			BitVectorTests.Run();
 
-			EncryptionTests.Run(peer1);
+			EncryptionTests.Run(peer);
 
-			var om = peer1.CreateMessage();
-			peer1.SendUnconnectedMessage(om, new IPEndPoint(IPAddress.Loopback, 14242));
+			var om = peer.CreateMessage();
+			peer.SendUnconnectedMessage(om, new IPEndPoint(IPAddress.Loopback, 14242));
 			try
 			{
-				peer1.SendUnconnectedMessage(om, new IPEndPoint(IPAddress.Loopback, 14242));
+				peer.SendUnconnectedMessage(om, new IPEndPoint(IPAddress.Loopback, 14242));
 			}
 			catch (NetException nex)
 			{
@@ -55,10 +39,10 @@ namespace UnitTests
 					throw;
 			}
 
-			peer1.Shutdown("bye");
+			peer.Shutdown("bye");
 
 			// read all message
-			NetIncomingMessage inc = peer1.WaitMessage(5000);
+			NetIncomingMessage inc = peer.WaitMessage(5000);
 			while (inc != null)
 			{
 				switch (inc.MessageType)
@@ -73,15 +57,10 @@ namespace UnitTests
 						throw new Exception("Received error message!");
 				}
 
-				inc = peer1.ReadMessage();
+				inc = peer.ReadMessage();
 			}
-			Console.WriteLine($"Unique identifier for connection is {peer1.ServerConnection?.RemoteUniqueIdentifier}");
-			Console.WriteLine($"Unique identifier for connection is {peer2.ServerConnection?.RemoteUniqueIdentifier}");
 
-			foreach (NetConnection c in server.Connections)
-				Console.WriteLine($"Unique identifier in Server connection is {c.RemoteUniqueIdentifier}");
 			Console.WriteLine("Done");
-			Console.ReadKey();
 		}
 
 		/// <summary>
